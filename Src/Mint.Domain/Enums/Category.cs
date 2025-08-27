@@ -1,0 +1,19 @@
+public enum Category
+{
+    Groceries,
+    Transportation,
+    Utilities,
+    Housing,
+    Entertainment,
+    Debt,
+    Insurance,
+    Childcare,
+    Health,
+    Clothing,
+    PersonalCare,
+    Dinner,
+    Pets,
+    Gas,
+    Miscellaneous,
+    Savings
+}
