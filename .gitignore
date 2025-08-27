@@ -1,3 +1,12 @@
+# CSharp specific
+Src/Mint.API/obj/
+Src/Mint.API/bin/
+Src/Mint.Application/obj/
+Src/Mint.Application/bin/
+Src/Mint.Infrastructure/obj/
+Src/Mint.Infrastructure/bin/
+Src/Mint.Domain/obj/
+Src/Mint.Domain/bin/
 # Angular specific
 /dist/
 /out-tsc/
@@ -26,3 +35,4 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
