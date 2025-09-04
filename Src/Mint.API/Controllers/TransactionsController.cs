@@ -15,8 +15,8 @@ namespace Mint.API.Controllers
             return Ok(transactions);
         }
 
-        [HttpGet("{id:int}")]
-        public async Task<IActionResult> GetById(int id)
+        [HttpGet("{id:Guid}")]
+        public async Task<IActionResult> GetById(Guid id)
         {
             var transaction = await transactionService.GetByIdAsync(id);
             if (transaction is null)
@@ -33,8 +33,8 @@ namespace Mint.API.Controllers
             return CreatedAtAction(nameof(GetById), new { id = createdTransaction.Id }, createdTransaction);
         }
 
-        [HttpPut("{id:int}")]
-        public async Task<IActionResult> Update(int id, [FromBody] TransactionDto updatedTransaction)
+        [HttpPut("{id:Guid}")]
+        public async Task<IActionResult> Update(Guid id, [FromBody] TransactionDto updatedTransaction)
         {
             var transaction = await transactionService.UpdateAsync(id, updatedTransaction);
             if (transaction is null)
@@ -44,8 +44,8 @@ namespace Mint.API.Controllers
             return Ok(transaction);
         }
 
-        [HttpDelete("{id:int}")]
-        public async Task<IActionResult> Delete(int id)
+        [HttpDelete("{id:Guid}")]
+        public async Task<IActionResult> Delete(Guid id)
         {
             var result = await transactionService.DeleteAsync(id);
             if (!result)

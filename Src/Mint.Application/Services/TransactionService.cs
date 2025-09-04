@@ -3,6 +3,9 @@ using Mint.Domain.Models;
 using Mint.Application.DTOs;
 using Mint.Application.Mappings;
 using Mint.Application.Interfaces;
+using Microsoft.Extensions.Options;
+using Mint.Application.Options;
+using MongoDB.Bson;
 
 namespace Mint.Application.Services
 {
@@ -10,19 +13,26 @@ namespace Mint.Application.Services
     /// Service for managing transactions.
     /// </summary>
     /// <param name="database"> MongoDB Database </param>
-    public class TransactionService(IMongoDatabase database) : ITransactionService
+    public class TransactionService : ITransactionService
     {
         /// <summary>
         /// The collection of transactions from MongoDB.
         /// </summary>
-        private readonly IMongoCollection<Transaction> _transactionCollection = database.GetCollection<Transaction>("Transactions");
+        private readonly IMongoCollection<Transaction> _transactionCollection;
+
+        public TransactionService(IOptions<MongoDatabaseOptions> options)
+        {
+            var mongoClient = new MongoClient(options.Value.ConnectionString);
+            var database = mongoClient.GetDatabase(options.Value.Database);
+            _transactionCollection = database.GetCollection<Transaction>(options.Value.CollectionName);
+        }
 
         public async Task<List<Transaction>> GetAllAsync()
         {
             return await _transactionCollection.Find(_ => true).ToListAsync();
         }
 
-        public async Task<Transaction?> GetByIdAsync(int id)
+        public async Task<Transaction?> GetByIdAsync(Guid id)
         {
             return await _transactionCollection.Find(transaction => transaction.Id == id).FirstOrDefaultAsync();
         }
@@ -33,7 +43,7 @@ namespace Mint.Application.Services
             return transaction;
         }
 
-        public async Task<TransactionDto?> UpdateAsync(int id, TransactionDto updatedTransaction)
+        public async Task<TransactionDto?> UpdateAsync(Guid id, TransactionDto updatedTransaction)
         {
             var transaction = await _transactionCollection.Find(t => t.Id == id).FirstOrDefaultAsync();
             if (transaction is null)
@@ -49,7 +59,7 @@ namespace Mint.Application.Services
             return transaction.ToDto();
         }
 
-        public async Task<bool> DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(Guid id)
         {
             var result = await _transactionCollection.DeleteOneAsync(t => t.Id == id);
             return result.DeletedCount > 0;

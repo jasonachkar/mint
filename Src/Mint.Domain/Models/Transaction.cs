@@ -6,8 +6,9 @@ namespace Mint.Domain.Models
     public class Transaction
     {
         [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public int Id { get; set; }
+        // Explicitly specify the GUID representation for this property
+        [BsonGuidRepresentation(GuidRepresentation.Standard)]
+        public Guid Id { get; set; }
 
         public string Name { get; set; } = string.Empty;
 
@@ -18,5 +19,12 @@ namespace Mint.Domain.Models
         public DateTime UpdatedAt { get; set; }
 
         public Category Category { get; set; }
+
+        public Transaction()
+        {
+            Id = Guid.NewGuid();
+            CreatedAt = DateTime.UtcNow;
+            UpdatedAt = DateTime.UtcNow;
+        }
     }
 }

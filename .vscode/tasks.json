@@ -1,0 +1,12 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "dotnet",
+			"task": "watch Mint.API",
+			"file": "/Users/jason/projects/mint/Src/Mint.API/Mint.API.csproj",
+			"problemMatcher": [],
+			"label": "dotnet: watch Mint.API"
+		}
+	]
+}
