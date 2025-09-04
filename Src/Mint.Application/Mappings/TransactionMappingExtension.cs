@@ -17,7 +17,6 @@ namespace Mint.Application.Mappings
         {
             return new Transaction
             {
-                Id = dto.Id,
                 Name = dto.Name,
                 Amount = dto.Amount,
                 CreatedAt = dto.CreatedAt,

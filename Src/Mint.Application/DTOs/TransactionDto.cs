@@ -1,3 +1,5 @@
+using MongoDB.Bson;
+
 namespace Mint.Application.DTOs
 {
     /// <summary>
@@ -5,7 +7,7 @@ namespace Mint.Application.DTOs
     /// </summary>
     public class TransactionDto
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         public string Name { get; set; } = string.Empty;
 

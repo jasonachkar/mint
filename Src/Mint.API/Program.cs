@@ -1,5 +1,5 @@
 using Microsoft.Extensions.Options;
-using Mint.API.Options;
+using Mint.Application.Options;
 using Mint.Application.Interfaces;
 using Mint.Application.Services;
 using MongoDB.Driver;
@@ -19,7 +19,7 @@ builder.Services.AddSingleton<IMongoClient>(serviceProvider =>
     return new MongoClient(options.ConnectionString);
 });
 
-builder.Services.AddScoped(serviceProvider =>
+builder.Services.AddScoped<IMongoDatabase>(serviceProvider =>
 {
     var options = serviceProvider.GetRequiredService<IOptions<MongoDatabaseOptions>>().Value;
     var client = serviceProvider.GetRequiredService<IMongoClient>();
@@ -30,7 +30,8 @@ builder.Services.AddScoped(serviceProvider =>
 builder.Services.AddScoped<ITransactionService, TransactionService>();
 
 // Adding Controllers
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+.AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
 
 // Swagger
 builder.Services.AddEndpointsApiExplorer();
@@ -47,7 +48,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+// Map Controllers (This was causing the 404 Not Found error)
+app.MapControllers();
 app.Run();
 
 public partial class Program { }
