@@ -17,6 +17,6 @@ namespace Mint.Application.DTOs
 
         public DateTime UpdatedAt { get; init; }
 
-        public Category Category { get; init; }
+        public required Category Category { get; init; }
     }
 }
