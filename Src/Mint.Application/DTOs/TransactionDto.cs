@@ -1,22 +1,22 @@
-using MongoDB.Bson;
+using Mint.Domain.Models;
 
 namespace Mint.Application.DTOs
 {
     /// <summary>
     /// Data Transfer Object for a financial transaction.
     /// </summary>
-    public class TransactionDto
+    public record TransactionDto
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; init; }
 
-        public string Name { get; set; } = string.Empty;
+        public string Name { get; init; } = string.Empty;
 
-        public decimal Amount { get; set; }
+        public decimal Amount { get; init; }
 
-        public DateTime CreatedAt { get; set; }
+        public DateTime CreatedAt { get; init; }
 
-        public DateTime UpdatedAt { get; set; }
+        public DateTime UpdatedAt { get; init; }
 
-        public Category Category { get; set; }
+        public Category Category { get; init; }
     }
 }

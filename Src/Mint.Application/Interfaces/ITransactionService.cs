@@ -8,8 +8,8 @@ namespace Mint.Application.Interfaces
     {
         Task<TransactionDto> CreateAsync(TransactionDto transaction);
         Task<bool> DeleteAsync(Guid id);
-        Task<List<Transaction>> GetAllAsync();
-        Task<Transaction?> GetByIdAsync(Guid id);
+        Task<List<TransactionDto>> GetAllAsync();
+        Task<TransactionDto?> GetByIdAsync(Guid id);
         Task<TransactionDto?> UpdateAsync(Guid id, TransactionDto updatedTransaction);
     }
 }

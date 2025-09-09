@@ -5,7 +5,6 @@ using Mint.Application.Mappings;
 using Mint.Application.Interfaces;
 using Microsoft.Extensions.Options;
 using Mint.Application.Options;
-using MongoDB.Bson;
 
 namespace Mint.Application.Services
 {
@@ -27,14 +26,16 @@ namespace Mint.Application.Services
             _transactionCollection = database.GetCollection<Transaction>(options.Value.CollectionName);
         }
 
-        public async Task<List<Transaction>> GetAllAsync()
+        public async Task<List<TransactionDto>> GetAllAsync()
         {
-            return await _transactionCollection.Find(_ => true).ToListAsync();
+            var transactions = await _transactionCollection.Find(_ => true).ToListAsync();
+            return transactions.Select(transaction => transaction.ToDto()).ToList();
         }
 
-        public async Task<Transaction?> GetByIdAsync(Guid id)
+        public async Task<TransactionDto?> GetByIdAsync(Guid id)
         {
-            return await _transactionCollection.Find(transaction => transaction.Id == id).FirstOrDefaultAsync();
+            var transaction = await _transactionCollection.Find(t => t.Id == id).FirstOrDefaultAsync();
+            return transaction?.ToDto();
         }
 
         public async Task<TransactionDto> CreateAsync(TransactionDto transaction)
