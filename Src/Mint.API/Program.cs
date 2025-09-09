@@ -28,6 +28,10 @@ builder.Services.AddScoped<IMongoDatabase>(serviceProvider =>
 
 // Register Transaction Service
 builder.Services.AddScoped<ITransactionService, TransactionService>();
+// Register Budget Service
+builder.Services.AddScoped<IBudgetService, BudgetService>();
+// Register Category Service
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 // Adding Controllers
 builder.Services.AddControllers()

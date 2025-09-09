@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Options;
 using Mint.Application.DTOs;
+using Mint.Application.Interfaces;
 using Mint.Application.Mappings;
 using Mint.Application.Options;
 using Mint.Domain.Models;
@@ -7,7 +8,7 @@ using MongoDB.Driver;
 
 namespace Mint.Application.Services
 {
-    public class CategoryService
+    public class CategoryService : ICategoryService
     {
         private readonly IMongoCollection<Category> _categoryCollection;
 
