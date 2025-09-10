@@ -7,6 +7,9 @@ Src/Mint.Infrastructure/obj/
 Src/Mint.Infrastructure/bin/
 Src/Mint.Domain/obj/
 Src/Mint.Domain/bin/
+Src/Mint.API/appsettings.Development.json
+Src/Mint.API/appsettings.json
+
 # Angular specific
 /dist/
 /out-tsc/
@@ -35,6 +38,3 @@ Src/Mint.Domain/bin/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-Src/Mint.API/appsettings.json
-Src/Mint.API/*.json
-Src/Mint.API/appsettings.Development.json
