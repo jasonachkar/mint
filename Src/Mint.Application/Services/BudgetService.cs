@@ -19,7 +19,7 @@ namespace Mint.Application.Services
         {
             var mongoClient = new MongoClient(options.Value.ConnectionString);
             var database = mongoClient.GetDatabase(options.Value.Database);
-            _budgetCollection = database.GetCollection<Budget>(options.Value.CollectionName);
+            _budgetCollection = database.GetCollection<Budget>(options.Value.BudgetCollection);
         }
         public async Task<List<BudgetDto>> GetAllAsync()
         {

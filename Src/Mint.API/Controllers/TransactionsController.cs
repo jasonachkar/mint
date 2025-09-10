@@ -29,19 +29,35 @@ namespace Mint.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] TransactionDto transactionDto)
         {
-            var createdTransaction = await transactionService.CreateAsync(transactionDto);
-            return CreatedAtAction(nameof(GetById), new { id = createdTransaction.Id }, createdTransaction);
+            try
+            {
+                var createdTransaction = await transactionService.CreateAsync(transactionDto);
+                return CreatedAtAction(nameof(GetById), new { id = createdTransaction.Id }, createdTransaction);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                return BadRequest(new { Success = false, Message = ex.Message });
+            }
         }
 
         [HttpPut("{id:Guid}")]
         public async Task<IActionResult> Update(Guid id, [FromBody] TransactionDto updatedTransaction)
         {
-            var transaction = await transactionService.UpdateAsync(id, updatedTransaction);
-            if (transaction is null)
+            try
             {
-                return NotFound(new { Success = false, Message = $"Transaction with ID {id} was not found!" });
+                var transaction = await transactionService.UpdateAsync(id, updatedTransaction);
+                if (transaction is null)
+                {
+                    return NotFound(new { Success = false, Message = $"Transaction with ID {id} was not found!" });
+                }
+                return Ok(transaction);
             }
-            return Ok(transaction);
+            catch (Exception ex)
+            {
+                // Log the exception
+                return BadRequest(new { Success = false, Message = ex.Message });
+            }
         }
 
         [HttpDelete("{id:Guid}")]

@@ -1,7 +1,11 @@
+using MongoDB.Bson.Serialization.Attributes;
+
 namespace Mint.Domain.Models
 {
     public class Category
     {
+        [BsonId]
+        [BsonGuidRepresentation(MongoDB.Bson.GuidRepresentation.Standard)]
         public Guid Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;

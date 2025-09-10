@@ -4,6 +4,8 @@ namespace Mint.Application.Options
     {
         public string ConnectionString { get; set; } = string.Empty;
         public string Database { get; set; } = string.Empty;
-        public string CollectionName { get; set; } = string.Empty;
+        public string TransactionCollection { get; set; } = string.Empty;
+        public string CategoryCollection { get; set; } = string.Empty;
+        public string BudgetCollection { get; set; } = string.Empty;
     }
 }

@@ -36,19 +36,35 @@ namespace Mint.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateBudget([FromBody] BudgetDto budgetDto)
         {
-            var createdBudget = await _budgetService.CreateAsync(budgetDto);
-            return CreatedAtAction(nameof(GetBudgetById), new { id = createdBudget.Id }, createdBudget);
+            try
+            {
+                var createdBudget = await _budgetService.CreateAsync(budgetDto);
+                return CreatedAtAction(nameof(GetBudgetById), new { id = createdBudget.Id }, createdBudget);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                return BadRequest(new { Success = false, Message = ex.Message });
+            }
         }
 
         [HttpPut("{id:guid}")]
         public async Task<IActionResult> UpdateBudget(Guid id, [FromBody] BudgetDto updatedBudget)
         {
-            var budget = await _budgetService.UpdateAsync(id, updatedBudget);
-            if (budget == null)
+            try
             {
-                return NotFound();
+                var budget = await _budgetService.UpdateAsync(id, updatedBudget);
+                if (budget == null)
+                {
+                    return NotFound();
+                }
+                return Ok(budget);
             }
-            return Ok(budget);
+            catch (Exception ex)
+            {
+                // Log the exception
+                return BadRequest(new { Success = false, Message = ex.Message });
+            }
         }
 
         [HttpDelete("{id:guid}")]

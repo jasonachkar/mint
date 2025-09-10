@@ -16,7 +16,7 @@ namespace Mint.Application.Services
         {
             var mongoClient = new MongoClient(options.Value.ConnectionString);
             var database = mongoClient.GetDatabase(options.Value.Database);
-            _categoryCollection = database.GetCollection<Category>(options.Value.CollectionName);
+            _categoryCollection = database.GetCollection<Category>(options.Value.CategoryCollection);
         }
 
         public async Task<List<CategoryDto>> GetAllAsync()

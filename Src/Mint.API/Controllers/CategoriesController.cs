@@ -36,19 +36,35 @@ namespace Mint.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateCategory([FromBody] CategoryDto categoryDto)
         {
-            var createdCategory = await _categoryService.CreateAsync(categoryDto);
-            return CreatedAtAction(nameof(GetCategoryById), new { id = createdCategory.Id }, createdCategory);
+            try
+            {
+                var createdCategory = await _categoryService.CreateAsync(categoryDto);
+                return CreatedAtAction(nameof(GetCategoryById), new { id = createdCategory.Id }, createdCategory);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                return BadRequest(new { Success = false, Message = ex.Message });
+            }
         }
 
         [HttpPut("{id:guid}")]
         public async Task<IActionResult> UpdateCategory(Guid id, [FromBody] CategoryDto updatedCategory)
         {
-            var category = await _categoryService.UpdateAsync(id, updatedCategory);
-            if (category == null)
+            try
             {
-                return NotFound();
+                var category = await _categoryService.UpdateAsync(id, updatedCategory);
+                if (category == null)
+                {
+                    return NotFound();
+                }
+                return Ok(category);
             }
-            return Ok(category);
+            catch (Exception ex)
+            {
+                // Log the exception
+                return BadRequest(new { Success = false, Message = ex.Message });
+            }
         }
 
         [HttpDelete("{id:guid}")]

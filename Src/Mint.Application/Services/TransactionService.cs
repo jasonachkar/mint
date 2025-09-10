@@ -23,7 +23,7 @@ namespace Mint.Application.Services
         {
             var mongoClient = new MongoClient(options.Value.ConnectionString);
             var database = mongoClient.GetDatabase(options.Value.Database);
-            _transactionCollection = database.GetCollection<Transaction>(options.Value.CollectionName);
+            _transactionCollection = database.GetCollection<Transaction>(options.Value.TransactionCollection);
         }
 
         public async Task<List<TransactionDto>> GetAllAsync()
